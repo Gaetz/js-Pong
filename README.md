@@ -14,8 +14,8 @@ File structure
 - Create a 'app' folder at root
 - Create a 'index.js' in the app folder
 - Create a 'dist' folder at root
-- Create a .babelrc file at root
-- Create a webpack.config.js file at root
+- Create a '.babelrc' file at root
+- Create a 'webpack.config.js' file at root
 - add 'node_modules' to your .gitignore
 
 Install babel locally
@@ -81,5 +81,5 @@ import Ball from './ball';
 
 Run webpack in terminal to compile your js. This will export bundle.js in dist folder, where your html page will use it.
 ```
-$ ./node_modules/.bin/webpack app/index.js dist/bundle.js`
+$ ./node_modules/.bin/webpack app/index.js dist/bundle.js
 ```
