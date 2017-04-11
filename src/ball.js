@@ -1,9 +1,11 @@
 export default class Ball {
 
-  constructor(radius, x, y) {
+  constructor(radius, x, y, speedX=2, speedY=2) {
     this.radius = radius;
     this.x = x;
     this.y = y;
+    this.speedX = speedX;
+    this.speedY = speedY;
   }
 
   draw(canvasContext) {

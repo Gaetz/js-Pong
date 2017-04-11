@@ -1,12 +1,10 @@
 import Ball from './ball';
 import Background from './background';
 
-let canvas;
-let canvasContext;
-let ball;
-let background;
+const FRAME_PER_SECOND = 30;
 
-let framePerSecond = 60;
+let canvas, canvasContext;
+let ball, background;
 
 window.onload =	function() {
     canvas = document.getElementById('gameCanvas');
@@ -17,16 +15,14 @@ window.onload =	function() {
     setInterval( () => {
         update();
         draw();
-    }, 1000/framePerSecond);
+    }, 1000/FRAME_PER_SECOND);
 }
 
 function update() {
-    ball.x += 5;
+    ball.x += ball.speedX;
 }
 
 function draw() {
-    // Background
     background.draw(canvasContext);
-    // Ball
     ball.draw(canvasContext);
 }

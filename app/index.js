@@ -10,12 +10,12 @@ var _background2 = _interopRequireDefault(_background);
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
-var canvas = void 0;
-var canvasContext = void 0;
-var ball = void 0;
-var background = void 0;
+var FRAME_PER_SECOND = 60;
 
-var framePerSecond = 60;
+var canvas = void 0,
+    canvasContext = void 0;
+var ball = void 0,
+    background = void 0;
 
 window.onload = function () {
     canvas = document.getElementById('gameCanvas');
@@ -26,16 +26,14 @@ window.onload = function () {
     setInterval(function () {
         update();
         draw();
-    }, 1000 / framePerSecond);
+    }, 1000 / FRAME_PER_SECOND);
 };
 
 function update() {
-    ball.x += 5;
+    ball.x += ball.speedX;
 }
 
 function draw() {
-    // Background
     background.draw(canvasContext);
-    // Ball
     ball.draw(canvasContext);
 }
