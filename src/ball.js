@@ -1,6 +1,6 @@
 export default class Ball {
 
-  constructor(radius, x, y, speedX=5, speedY=5) {
+  constructor(radius, x, y, speedX=6, speedY=6) {
     this.radius = radius;
     this.x = x;
     this.y = y;
@@ -11,9 +11,12 @@ export default class Ball {
   update(canvas) {
     // Move
     this.x += this.speedX;
+    this.y += this.speedY;
     // Bounce
     if(this.x > canvas.width || this.x < 0)
       this.speedX *= -1;
+    if(this.y > canvas.height || this.y < 0)
+      this.speedY *= -1;
   }
 
   draw(canvasContext) {
