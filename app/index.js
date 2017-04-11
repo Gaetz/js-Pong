@@ -14,6 +14,13 @@ window.onload =	function() {
     ball = new Ball(10, 75, 75);
     leftPaddle = new Paddle(0, 250);
     
+    // Manage input
+    canvas.addEventListener('mousemove', function(evt) {
+        let mousePos = calculateMousePos(evt);
+        leftPaddle.y = mousePos.y - (leftPaddle.height/2);	
+    } );
+
+    // Loop
     setInterval( () => {
         update();
         draw();
@@ -23,10 +30,35 @@ window.onload =	function() {
 function update() {
     ball.update(canvas);
     leftPaddle.update(canvas);
+    // Hozizontal out of terrain
+    // - Left side
+    if(ball.x < 0) {
+        // Ball on pad
+        if(ball.y + ball.radius/2 >= leftPaddle.y && ball.y + ball.radius/2 <= leftPaddle.y + leftPaddle.height)
+            ball.speedX *= -1;
+        // Ball missed
+        else
+            ball.reset();
+    }
+    // Right side
+    if(ball.x > canvas.width) {
+        ball.speedX *= -1;
+    }
 }
 
 function draw() {
     background.draw(canvasContext);
     ball.draw(canvasContext);
     leftPaddle.draw(canvasContext);
+}
+
+function calculateMousePos(evt) {
+    let rect = canvas.getBoundingClientRect();
+    let root = document.documentElement;
+    let mouseX = evt.clientX - rect.left - root.scrollLeft;
+    let mouseY = evt.clientY - rect.top - root.scrollTop;
+    return {
+        x: mouseX,
+        y: mouseY
+    };
 }

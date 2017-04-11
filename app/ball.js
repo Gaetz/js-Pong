@@ -13,8 +13,6 @@ export default class Ball {
     this.x += this.speedX;
     this.y += this.speedY;
     // Bounce
-    if(this.x > canvas.width || this.x < 0)
-      this.speedX *= -1;
     if(this.y > canvas.height || this.y < 0)
       this.speedY *= -1;
   }
@@ -26,4 +24,10 @@ export default class Ball {
     canvasContext.fill();
   }
 
+  reset() {
+    this.x = 75;
+    this.y = 75;
+    this.speedX = 6;
+    this.speedY = 6;
+  }
 }
