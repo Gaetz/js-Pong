@@ -19,7 +19,7 @@ window.onload =	function() {
 }
 
 function update() {
-    ball.x += ball.speedX;
+    ball.update(canvas);
 }
 
 function draw() {

@@ -10,8 +10,8 @@ function _classCallCheck(instance, Constructor) { if (!(instance instanceof Cons
 
 var Ball = function () {
   function Ball(radius, x, y) {
-    var speedX = arguments.length > 3 && arguments[3] !== undefined ? arguments[3] : 2;
-    var speedY = arguments.length > 4 && arguments[4] !== undefined ? arguments[4] : 2;
+    var speedX = arguments.length > 3 && arguments[3] !== undefined ? arguments[3] : 5;
+    var speedY = arguments.length > 4 && arguments[4] !== undefined ? arguments[4] : 5;
 
     _classCallCheck(this, Ball);
 
@@ -23,6 +23,14 @@ var Ball = function () {
   }
 
   _createClass(Ball, [{
+    key: 'update',
+    value: function update(canvas) {
+      // Move
+      this.x += this.speedX;
+      // Bounce
+      if (this.x > canvas.width || this.x < 0) this.speedX *= -1;
+    }
+  }, {
     key: 'draw',
     value: function draw(canvasContext) {
       canvasContext.fillStyle = 'white';

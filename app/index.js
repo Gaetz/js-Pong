@@ -10,7 +10,7 @@ var _background2 = _interopRequireDefault(_background);
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
-var FRAME_PER_SECOND = 60;
+var FRAME_PER_SECOND = 30;
 
 var canvas = void 0,
     canvasContext = void 0;
@@ -30,7 +30,7 @@ window.onload = function () {
 };
 
 function update() {
-    ball.x += ball.speedX;
+    ball.update(canvas);
 }
 
 function draw() {
