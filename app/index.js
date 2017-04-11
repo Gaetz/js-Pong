@@ -32,13 +32,15 @@ function update() {
     leftPaddle.update(canvas);
     // Hozizontal out of terrain
     // - Left side
-    if(ball.x < 0) {
+    if(ball.x < leftPaddle.width) {
         // Ball on pad
         if(ball.y + ball.radius/2 >= leftPaddle.y && ball.y + ball.radius/2 <= leftPaddle.y + leftPaddle.height)
             ball.speedX *= -1;
         // Ball missed
-        else
-            ball.reset();
+        else {
+            if(ball.x < 0)
+                ball.reset();
+        }
     }
     // Right side
     if(ball.x > canvas.width) {
