@@ -1,33 +1,22 @@
-'use strict';
+import Ball from './ball';
+import Background from './background';
 
-var _ball = require('./ball');
+const FRAME_PER_SECOND = 30;
 
-var _ball2 = _interopRequireDefault(_ball);
+let canvas, canvasContext;
+let ball, background;
 
-var _background = require('./background');
-
-var _background2 = _interopRequireDefault(_background);
-
-function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
-
-var FRAME_PER_SECOND = 30;
-
-var canvas = void 0,
-    canvasContext = void 0;
-var ball = void 0,
-    background = void 0;
-
-window.onload = function () {
+window.onload =	function() {
     canvas = document.getElementById('gameCanvas');
     canvasContext = canvas.getContext('2d');
-    background = new _background2.default(canvas.width, canvas.height);
-    ball = new _ball2.default(10, 75, 75);
-
-    setInterval(function () {
+    background = new Background(canvas.width, canvas.height);
+    ball = new Ball(10, 75, 75);
+    
+    setInterval( () => {
         update();
         draw();
-    }, 1000 / FRAME_PER_SECOND);
-};
+    }, 1000/FRAME_PER_SECOND);
+}
 
 function update() {
     ball.update(canvas);
