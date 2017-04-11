@@ -6,6 +6,7 @@ let canvasContext;
 let ball;
 let background;
 
+let framePerSecond = 60;
 
 window.onload =	function() {
     canvas = document.getElementById('gameCanvas');
@@ -13,7 +14,14 @@ window.onload =	function() {
     background = new Background(canvas.width, canvas.height);
     ball = new Ball(10, 75, 75);
     
-    setInterval(draw, 1000);
+    setInterval( () => {
+        update();
+        draw();
+    }, 1000/framePerSecond);
+}
+
+function update() {
+    ball.x += 5;
 }
 
 function draw() {
@@ -21,5 +29,4 @@ function draw() {
     background.draw(canvasContext);
     // Ball
     ball.draw(canvasContext);
-
 }
