@@ -13,7 +13,4 @@ export default class Ball {
     canvasContext.fill();
   }
 
-  test() {
-    console.log("bla");
-  }
 }

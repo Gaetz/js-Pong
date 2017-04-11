@@ -1,22 +1,24 @@
 import Ball from './ball';
+import Background from './background';
 
 let canvas;
 let canvasContext;
 let ball;
+let background;
+
 
 window.onload =	function() {
-    console.log("Hello World!");
-
     canvas = document.getElementById('gameCanvas');
     canvasContext = canvas.getContext('2d');
+    background = new Background(canvas.width, canvas.height);
     ball = new Ball(10, 75, 75);
-    draw();
+    
+    setInterval(draw, 1000);
 }
 
 function draw() {
     // Background
-    canvasContext.fillStyle = 'black';
-    canvasContext.fillRect(0, 0, canvas.width, canvas.height);
+    background.draw(canvasContext);
     // Ball
     ball.draw(canvasContext);
 

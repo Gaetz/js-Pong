@@ -1,4 +1,4 @@
-"use strict";
+'use strict';
 
 Object.defineProperty(exports, "__esModule", {
   value: true
@@ -18,17 +18,12 @@ var Ball = function () {
   }
 
   _createClass(Ball, [{
-    key: "draw",
+    key: 'draw',
     value: function draw(canvasContext) {
       canvasContext.fillStyle = 'white';
       canvasContext.beginPath();
       canvasContext.arc(this.x, this.y, this.radius, 0, Math.PI * 2, true);
       canvasContext.fill();
-    }
-  }, {
-    key: "test",
-    value: function test() {
-      console.log("bla");
     }
   }]);
 
