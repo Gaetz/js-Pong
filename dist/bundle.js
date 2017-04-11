@@ -68,48 +68,73 @@
 /************************************************************************/
 /******/ ([
 /* 0 */
-/***/ (function(module, __webpack_exports__, __webpack_require__) {
+/***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
-class Ball {
 
-  constructor(radius, x, y) {
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+
+var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
+
+function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+var Ball = function () {
+  function Ball(radius, x, y) {
+    _classCallCheck(this, Ball);
+
     this.radius = radius;
     this.x = x;
     this.y = y;
   }
 
-  draw(canvasContext) {
-    canvasContext.fillStyle = 'white';
-    canvasContext.beginPath(); 
-    canvasContext.arc(this.x, this.y, this.radius, 0, Math.PI*2, true);
-    canvasContext.fill();
-  }
-}
-/* harmony export (immutable) */ __webpack_exports__["a"] = Ball;
+  _createClass(Ball, [{
+    key: "draw",
+    value: function draw(canvasContext) {
+      canvasContext.fillStyle = 'white';
+      canvasContext.beginPath();
+      canvasContext.arc(this.x, this.y, this.radius, 0, Math.PI * 2, true);
+      canvasContext.fill();
+    }
+  }, {
+    key: "test",
+    value: function test() {
+      console.log("bla");
+    }
+  }]);
 
+  return Ball;
+}();
+
+exports.default = Ball;
 
 /***/ }),
 /* 1 */
-/***/ (function(module, __webpack_exports__, __webpack_require__) {
+/***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
-Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__ball__ = __webpack_require__(0);
 
 
-let canvas;
-let canvasContext;
-let ball;
+var _ball = __webpack_require__(0);
 
-window.onload =	function() {
+var _ball2 = _interopRequireDefault(_ball);
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+var canvas = void 0;
+var canvasContext = void 0;
+var ball = void 0;
+
+window.onload = function () {
     console.log("Hello World!");
 
     canvas = document.getElementById('gameCanvas');
     canvasContext = canvas.getContext('2d');
-    ball = new __WEBPACK_IMPORTED_MODULE_0__ball__["a" /* default */](10, 75, 75);
+    ball = new _ball2.default(10, 75, 75);
     draw();
-}
+};
 
 function draw() {
     // Background
@@ -117,7 +142,6 @@ function draw() {
     canvasContext.fillRect(0, 0, canvas.width, canvas.height);
     // Ball
     ball.draw(canvasContext);
-
 }
 
 /***/ })

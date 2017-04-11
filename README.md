@@ -11,9 +11,10 @@ Prerequisites
 
 File structure 
 - Create an 'index.html' file at root
-- Create a 'app' folder at root
-- Create a 'index.js' in the app folder
-- Create a 'dist' folder at root
+- Create a 'src' folder at root, where will you your javascript sources
+- Create a 'app' folder at root, where will go your babel compiled sources
+- Create a 'dist' folder at root, where webpack will bundle your sources
+- Create a 'index.js' in the src folder
 - Create a '.babelrc' file at root
 - Create a 'webpack.config.js' file at root
 - add 'node_modules' to your .gitignore
@@ -33,10 +34,10 @@ Install babel preset environment
 
 Paste this in your package.json, under `version`
  ``` json
- "scripts": {
-    "start": "webpack --config mywebpack.config.js",
-    "build": "babel src -d lib"
- },`
+  "scripts": {
+    "prestart": "babel src -d app",
+    "start":"./node_modules/.bin/webpack app/index.js dist/bundle.js"
+  },
  ```
  
 Paste this in your .babelrc file
@@ -79,7 +80,7 @@ import Ball from './ball';
 
 ```
 
-Run webpack in terminal to compile your js. This will export bundle.js in dist folder, where your html page will use it.
+Run babel and webpack thanks to npm in terminal to compile your js. This will export bundle.js in dist folder, where your html page will use it.
 ```
-$ ./node_modules/.bin/webpack app/index.js dist/bundle.js
+$ npm run start
 ```

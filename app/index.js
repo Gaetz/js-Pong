@@ -1,17 +1,23 @@
-import Ball from './ball';
+'use strict';
 
-let canvas;
-let canvasContext;
-let ball;
+var _ball = require('./ball');
 
-window.onload =	function() {
+var _ball2 = _interopRequireDefault(_ball);
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+var canvas = void 0;
+var canvasContext = void 0;
+var ball = void 0;
+
+window.onload = function () {
     console.log("Hello World!");
 
     canvas = document.getElementById('gameCanvas');
     canvasContext = canvas.getContext('2d');
-    ball = new Ball(10, 75, 75);
+    ball = new _ball2.default(10, 75, 75);
     draw();
-}
+};
 
 function draw() {
     // Background
@@ -19,5 +25,4 @@ function draw() {
     canvasContext.fillRect(0, 0, canvas.width, canvas.height);
     // Ball
     ball.draw(canvasContext);
-
 }
