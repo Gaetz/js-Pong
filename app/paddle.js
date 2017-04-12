@@ -14,11 +14,7 @@ export default class Paddle {
   }
 
   update(canvas) {
-    // Move
-    this.y += this.speedY;
-    // Limits
-    if (this.y + this.height > canvas.height ||  this.y < 0)
-      this.speedY = 0;
+
   }
 
   draw(canvasContext) {

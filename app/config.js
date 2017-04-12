@@ -10,6 +10,8 @@ export const PADDLE_WIDTH = 10;
 export const PADDLE_HEIGHT = 100;
 export const PADDLE_PLAYER_START_X = 0;
 export const PADDLE_PLAYER_START_Y = 250;
+export const PADDLE_OPPONENT_START_X = 800 - PADDLE_WIDTH;
+export const PADDLE_OPPONENT_START_Y = 400 - PADDLE_HEIGHT / 2;
 export const PADDLE_STYLE = 'white';
 
 // Ball

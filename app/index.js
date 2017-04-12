@@ -1,10 +1,14 @@
 import Ball from './ball';
 import Background from './background';
 import Paddle from './paddle';
-import { BALL_START_X, BALL_START_Y, PADDLE_PLAYER_START_X, PADDLE_PLAYER_START_Y, FRAME_PER_SECOND } from './config';
+import {
+    BALL_START_X, BALL_START_Y,
+    PADDLE_PLAYER_START_X, PADDLE_PLAYER_START_Y, PADDLE_OPPONENT_START_X, PADDLE_OPPONENT_START_Y,
+    FRAME_PER_SECOND
+} from './config';
 
 let canvas, canvasContext;
-let ball, background, leftPaddle;
+let ball, background, leftPaddle, rightPaddle;
 
 /**
  * Game start
@@ -16,6 +20,7 @@ window.onload = function () {
     background = new Background(canvas.width, canvas.height);
     ball = new Ball(BALL_START_X, BALL_START_Y);
     leftPaddle = new Paddle(PADDLE_PLAYER_START_X, PADDLE_PLAYER_START_Y);
+    rightPaddle = new Paddle(PADDLE_OPPONENT_START_X, PADDLE_OPPONENT_START_Y);
 
     // Manage input
     canvas.addEventListener('mousemove', function (evt) {
@@ -35,6 +40,7 @@ window.onload = function () {
 function update() {
     ball.update(canvas);
     leftPaddle.update(canvas);
+    rightPaddle.update(canvas);
     // Hozizontal out of terrain
     // - Left side
     if (ball.x < leftPaddle.width) {
@@ -60,7 +66,9 @@ function draw() {
     background.draw(canvasContext);
     ball.draw(canvasContext);
     leftPaddle.draw(canvasContext);
+    rightPaddle.draw(canvasContext);
 }
+
 /**
  * Get mouse position on screen
  * @param {event} evt - Passing mouse move
