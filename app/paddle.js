@@ -13,8 +13,8 @@ export default class Paddle {
     this.speedY = speedY;
   }
 
-  update(canvas) {
-
+  update() {
+    this.y = this.y + this.speedY;
   }
 
   draw(canvasContext) {

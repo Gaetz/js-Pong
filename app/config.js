@@ -14,12 +14,14 @@ export const PADDLE_PLAYER_START_Y = 250;
 export const PADDLE_OPPONENT_START_X = 800 - PADDLE_WIDTH;
 export const PADDLE_OPPONENT_START_Y = 400 - PADDLE_HEIGHT / 2;
 export const PADDLE_STYLE = 'white';
+export const PADDLE_OPPONENT_Y_SPEED = 7;
+export const PADDLE_OPPONENT_DEAD_ZONE = 30;
 
 // Ball
 export const BALL_START_X = 75;
 export const BALL_START_Y = 75;
-export const BALL_START_SPEED_X = 10;
-export const BALL_START_SPEED_Y = 10;
+export const BALL_START_SPEED_X = 8;
+export const BALL_START_SPEED_Y = 8;
 export const BALL_RADIUS = 10;
 export const BALL_STYLE = 'white';
 

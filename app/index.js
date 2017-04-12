@@ -1,6 +1,7 @@
 import Ball from './ball';
 import Background from './background';
 import Paddle from './paddle';
+import PaddleAI from './paddleAI';
 import ScoreManager from './scoreManager';
 import {
     BALL_START_X, BALL_START_Y,
@@ -21,7 +22,7 @@ window.onload = function () {
     // Manage inputs
     canvas.addEventListener('mousemove', function (evt) {
         let mousePos = calculateMousePos(evt);
-        rightPaddle.y = mousePos.y - (rightPaddle.height / 2);
+        leftPaddle.y = mousePos.y - (leftPaddle.height / 2);
     });
     // Loop
     setInterval(() => {
@@ -39,7 +40,7 @@ function load() {
     background = new Background(canvas.width, canvas.height);
     ball = new Ball(BALL_START_X, BALL_START_Y);
     leftPaddle = new Paddle(PADDLE_PLAYER_START_X, PADDLE_PLAYER_START_Y);
-    rightPaddle = new Paddle(PADDLE_OPPONENT_START_X, PADDLE_OPPONENT_START_Y);
+    rightPaddle = new PaddleAI(PADDLE_OPPONENT_START_X, PADDLE_OPPONENT_START_Y);
     score = new ScoreManager();
 }
 
@@ -48,8 +49,8 @@ function load() {
  */
 function update() {
     ball.update(canvas);
-    leftPaddle.update(canvas);
-    rightPaddle.update(canvas);
+    leftPaddle.update();
+    rightPaddle.update(ball);
     // Hozizontal out of terrain
     // - Left side
     if (ball.x < leftPaddle.width) {
