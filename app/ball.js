@@ -1,9 +1,14 @@
+import {BALL_START_X, BALL_START_Y, BALL_RADIUS, BALL_START_SPEED_X, BALL_START_SPEED_Y, BALL_STYLE} from './config';
+
+/**
+ * 
+ */
 export default class Ball {
 
-  constructor(radius, x, y, speedX=6, speedY=6) {
-    this.radius = radius;
+  constructor(x, y, radius = BALL_RADIUS, speedX = BALL_START_SPEED_X, speedY = BALL_START_SPEED_Y) {
     this.x = x;
     this.y = y;
+    this.radius = radius;
     this.speedX = speedX;
     this.speedY = speedY;
   }
@@ -18,16 +23,19 @@ export default class Ball {
   }
 
   draw(canvasContext) {
-    canvasContext.fillStyle = 'white';
+    canvasContext.fillStyle = BALL_STYLE;
     canvasContext.beginPath(); 
     canvasContext.arc(this.x, this.y, this.radius, 0, Math.PI*2, true);
     canvasContext.fill();
   }
 
+  /**
+   * Reset ball position and speed
+   */
   reset() {
-    this.x = 75;
-    this.y = 75;
-    this.speedX = 6;
-    this.speedY = 6;
+    this.x = BALL_START_X;
+    this.y = BALL_START_Y;
+    this.speedX = BALL_START_SPEED_X;
+    this.speedY = BALL_START_SPEED_Y;
   }
 }

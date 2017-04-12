@@ -1,25 +1,27 @@
 import Ball from './ball';
 import Background from './background';
 import Paddle from './paddle';
-
-const FRAME_PER_SECOND = 30;
+import {BALL_START_X, BALL_START_Y, PADDLE_START_X, PADDLE_START_Y, FRAME_PER_SECOND} from './config';
 
 let canvas, canvasContext;
 let ball, background, leftPaddle;
 
+/**
+ * Game start
+ */
 window.onload =	function() {
+    // Load game elements
     canvas = document.getElementById('gameCanvas');
     canvasContext = canvas.getContext('2d');
     background = new Background(canvas.width, canvas.height);
-    ball = new Ball(10, 75, 75);
-    leftPaddle = new Paddle(0, 250);
+    ball = new Ball(BALL_START_X, BALL_START_Y);
+    leftPaddle = new Paddle(PADDLE_START_X, PADDLE_START_Y);
     
     // Manage input
     canvas.addEventListener('mousemove', function(evt) {
         let mousePos = calculateMousePos(evt);
         leftPaddle.y = mousePos.y - (leftPaddle.height/2);	
     } );
-
     // Loop
     setInterval( () => {
         update();
@@ -27,6 +29,9 @@ window.onload =	function() {
     }, 1000/FRAME_PER_SECOND);
 }
 
+/**
+ * Update loop
+ */
 function update() {
     ball.update(canvas);
     leftPaddle.update(canvas);
@@ -48,12 +53,18 @@ function update() {
     }
 }
 
+/**
+ * Draw loop
+ */
 function draw() {
     background.draw(canvasContext);
     ball.draw(canvasContext);
     leftPaddle.draw(canvasContext);
 }
-
+/**
+ * Get mouse position on screen
+ * @param {event} evt - Passing mouse move
+ */
 function calculateMousePos(evt) {
     let rect = canvas.getBoundingClientRect();
     let root = document.documentElement;

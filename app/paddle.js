@@ -1,5 +1,11 @@
+import {PADDLE_WIDTH, PADDLE_HEIGHT, PADDLE_STYLE} from './config';
+
+/**
+ * Moving paddle, to send back the ball
+ */
 export default class Paddle {
-  constructor(x, y, width=20, height=150, speedY=0) {
+
+  constructor(x, y, width=PADDLE_WIDTH, height=PADDLE_HEIGHT, speedY=0) {
     this.x = x;
     this.y = y;
     this.width = width;
@@ -16,7 +22,7 @@ export default class Paddle {
   }
 
   draw(canvasContext) {
-    canvasContext.fillStyle = 'white';
+    canvasContext.fillStyle = PADDLE_STYLE;
     canvasContext.beginPath(); 
     canvasContext.rect(this.x, this.y, this.width, this.height);
     canvasContext.fill();

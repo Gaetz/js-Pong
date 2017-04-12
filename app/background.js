@@ -1,3 +1,8 @@
+import {BACKGROUND_STYLE} from './config';
+
+/**
+ * Game background
+ */
 export default class Background {
 
   constructor(width, height) {
@@ -6,7 +11,7 @@ export default class Background {
   }
 
   draw(canvasContext) {
-    canvasContext.fillStyle = 'black';
+    canvasContext.fillStyle = BACKGROUND_STYLE;
     canvasContext.fillRect(0, 0, this.width, this.height);
   }
 
