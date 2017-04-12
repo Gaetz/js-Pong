@@ -15,14 +15,8 @@ let ball, background, leftPaddle, rightPaddle;
  */
 window.onload = function () {
     // Load game elements
-    canvas = document.getElementById('gameCanvas');
-    canvasContext = canvas.getContext('2d');
-    background = new Background(canvas.width, canvas.height);
-    ball = new Ball(BALL_START_X, BALL_START_Y);
-    leftPaddle = new Paddle(PADDLE_PLAYER_START_X, PADDLE_PLAYER_START_Y);
-    rightPaddle = new Paddle(PADDLE_OPPONENT_START_X, PADDLE_OPPONENT_START_Y);
-
-    // Manage input
+    load();
+    // Manage inputs
     canvas.addEventListener('mousemove', function (evt) {
         let mousePos = calculateMousePos(evt);
         leftPaddle.y = mousePos.y - (leftPaddle.height / 2);
@@ -32,6 +26,18 @@ window.onload = function () {
         update();
         draw();
     }, 1000 / FRAME_PER_SECOND);
+}
+
+/**
+ * Loading game elements 
+ * */
+function load() {
+    canvas = document.getElementById('gameCanvas');
+    canvasContext = canvas.getContext('2d');
+    background = new Background(canvas.width, canvas.height);
+    ball = new Ball(BALL_START_X, BALL_START_Y);
+    leftPaddle = new Paddle(PADDLE_PLAYER_START_X, PADDLE_PLAYER_START_Y);
+    rightPaddle = new Paddle(PADDLE_OPPONENT_START_X, PADDLE_OPPONENT_START_Y);
 }
 
 /**
