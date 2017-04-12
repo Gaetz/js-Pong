@@ -9,6 +9,7 @@ import {
 
 let canvas, canvasContext;
 let ball, background, leftPaddle, rightPaddle;
+let playerScore = 0, opponentScore = 0;
 
 /**
  * Game start
@@ -80,6 +81,7 @@ function draw() {
     ball.draw(canvasContext);
     leftPaddle.draw(canvasContext);
     rightPaddle.draw(canvasContext);
+    drawScore(canvasContext);
 }
 
 /**
@@ -95,4 +97,11 @@ function calculateMousePos(evt) {
         x: mouseX,
         y: mouseY
     };
+}
+
+/**
+ * Draw game scores
+ */
+function drawScore(canvasContext) {
+    canvasContext.fillText(playerScore + " : " + opponentScore, 380, 20);
 }
