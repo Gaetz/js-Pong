@@ -1,7 +1,7 @@
-import {BALL_START_X, BALL_START_Y, BALL_RADIUS, BALL_START_SPEED_X, BALL_START_SPEED_Y, BALL_STYLE} from './config';
+import { BALL_START_X, BALL_START_Y, BALL_RADIUS, BALL_START_SPEED_X, BALL_START_SPEED_Y, BALL_STYLE } from './config';
 
 /**
- * 
+ * The ball the players have to catch
  */
 export default class Ball {
 
@@ -18,14 +18,14 @@ export default class Ball {
     this.x += this.speedX;
     this.y += this.speedY;
     // Bounce
-    if(this.y > canvas.height || this.y < 0)
+    if (this.y > canvas.height ||  this.y < 0)
       this.speedY *= -1;
   }
 
   draw(canvasContext) {
     canvasContext.fillStyle = BALL_STYLE;
-    canvasContext.beginPath(); 
-    canvasContext.arc(this.x, this.y, this.radius, 0, Math.PI*2, true);
+    canvasContext.beginPath();
+    canvasContext.arc(this.x, this.y, this.radius, 0, Math.PI * 2, true);
     canvasContext.fill();
   }
 

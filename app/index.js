@@ -1,7 +1,7 @@
 import Ball from './ball';
 import Background from './background';
 import Paddle from './paddle';
-import {BALL_START_X, BALL_START_Y, PADDLE_START_X, PADDLE_START_Y, FRAME_PER_SECOND} from './config';
+import { BALL_START_X, BALL_START_Y, PADDLE_PLAYER_START_X, PADDLE_PLAYER_START_Y, FRAME_PER_SECOND } from './config';
 
 let canvas, canvasContext;
 let ball, background, leftPaddle;
@@ -9,24 +9,24 @@ let ball, background, leftPaddle;
 /**
  * Game start
  */
-window.onload =	function() {
+window.onload = function () {
     // Load game elements
     canvas = document.getElementById('gameCanvas');
     canvasContext = canvas.getContext('2d');
     background = new Background(canvas.width, canvas.height);
     ball = new Ball(BALL_START_X, BALL_START_Y);
-    leftPaddle = new Paddle(PADDLE_START_X, PADDLE_START_Y);
-    
+    leftPaddle = new Paddle(PADDLE_PLAYER_START_X, PADDLE_PLAYER_START_Y);
+
     // Manage input
-    canvas.addEventListener('mousemove', function(evt) {
+    canvas.addEventListener('mousemove', function (evt) {
         let mousePos = calculateMousePos(evt);
-        leftPaddle.y = mousePos.y - (leftPaddle.height/2);	
-    } );
+        leftPaddle.y = mousePos.y - (leftPaddle.height / 2);
+    });
     // Loop
-    setInterval( () => {
+    setInterval(() => {
         update();
         draw();
-    }, 1000/FRAME_PER_SECOND);
+    }, 1000 / FRAME_PER_SECOND);
 }
 
 /**
@@ -37,18 +37,18 @@ function update() {
     leftPaddle.update(canvas);
     // Hozizontal out of terrain
     // - Left side
-    if(ball.x < leftPaddle.width) {
+    if (ball.x < leftPaddle.width) {
         // Ball on pad
-        if(ball.y + ball.radius/2 >= leftPaddle.y && ball.y + ball.radius/2 <= leftPaddle.y + leftPaddle.height)
+        if (ball.y + ball.radius / 2 >= leftPaddle.y && ball.y + ball.radius / 2 <= leftPaddle.y + leftPaddle.height)
             ball.speedX *= -1;
         // Ball missed
         else {
-            if(ball.x < 0)
+            if (ball.x < 0)
                 ball.reset();
         }
     }
     // Right side
-    if(ball.x > canvas.width) {
+    if (ball.x > canvas.width) {
         ball.speedX *= -1;
     }
 }

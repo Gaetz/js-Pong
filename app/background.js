@@ -1,4 +1,4 @@
-import {BACKGROUND_STYLE} from './config';
+import { BACKGROUND_STYLE } from './config';
 
 /**
  * Game background
