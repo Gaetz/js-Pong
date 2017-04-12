@@ -19,7 +19,7 @@ window.onload = function () {
     // Manage inputs
     canvas.addEventListener('mousemove', function (evt) {
         let mousePos = calculateMousePos(evt);
-        leftPaddle.y = mousePos.y - (leftPaddle.height / 2);
+        rightPaddle.y = mousePos.y - (rightPaddle.height / 2);
     });
     // Loop
     setInterval(() => {
@@ -60,8 +60,15 @@ function update() {
         }
     }
     // Right side
-    if (ball.x > canvas.width) {
-        ball.speedX *= -1;
+    if (ball.x > canvas.width - rightPaddle.width) {
+        // Ball on pad
+        if (ball.y + ball.radius / 2 >= rightPaddle.y && ball.y + ball.radius / 2 <= rightPaddle.y + rightPaddle.height)
+            ball.speedX *= -1;
+        // Ball missed
+        else {
+            if (ball.x > canvas.width)
+                ball.reset();
+        }
     }
 }
 
