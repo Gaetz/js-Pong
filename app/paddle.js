@@ -1,4 +1,4 @@
-import { PADDLE_WIDTH, PADDLE_HEIGHT, PADDLE_STYLE } from './config';
+import { PADDLE_WIDTH, PADDLE_HEIGHT, PADDLE_STYLE, BALL_START_SPEED_Y, ANGLE_MULTIPLICATOR } from './config';
 
 /**
  * Moving paddle, to send back the ball
@@ -22,5 +22,13 @@ export default class Paddle {
     canvasContext.beginPath();
     canvasContext.rect(this.x, this.y, this.width, this.height);
     canvasContext.fill();
+  }
+
+  /**
+   * Give the ball a return vertical spped based on pad collision's position
+   * @param {int} ballY Ball Y position
+   */
+  getBounceVerticalSpeed(ballY) {
+    return Math.round(BALL_START_SPEED_Y * (ballY - (this.y + this.height / 2)) / this.height * ANGLE_MULTIPLICATOR);
   }
 }

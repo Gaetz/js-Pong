@@ -54,8 +54,10 @@ function update() {
     // - Left side
     if (ball.x < leftPaddle.width) {
         // Ball on pad
-        if (ball.y + ball.radius / 2 >= leftPaddle.y && ball.y + ball.radius / 2 <= leftPaddle.y + leftPaddle.height)
+        if (ball.y + ball.radius / 2 >= leftPaddle.y && ball.y + ball.radius / 2 <= leftPaddle.y + leftPaddle.height) {
+            ball.speedY = leftPaddle.getBounceVerticalSpeed(ball.y)
             ball.speedX *= -1;
+        }
         // Ball missed
         else {
             if (ball.x < 0) {
@@ -67,8 +69,10 @@ function update() {
     // Right side
     if (ball.x > canvas.width - rightPaddle.width) {
         // Ball on pad
-        if (ball.y + ball.radius / 2 >= rightPaddle.y && ball.y + ball.radius / 2 <= rightPaddle.y + rightPaddle.height)
+        if (ball.y + ball.radius / 2 >= rightPaddle.y && ball.y + ball.radius / 2 <= rightPaddle.y + rightPaddle.height) {
+            ball.speedY = rightPaddle.getBounceVerticalSpeed(ball.y)
             ball.speedX *= -1;
+        }
         // Ball missed
         else {
             if (ball.x > canvas.width) {

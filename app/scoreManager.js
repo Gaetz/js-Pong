@@ -1,3 +1,6 @@
+/**
+ * Manage game score
+ */
 export default class ScoreManager {
 
     constructor() {
