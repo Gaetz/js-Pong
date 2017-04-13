@@ -4,7 +4,8 @@ import Paddle from './paddle';
 import PaddleAI from './paddleAI';
 import ScoreManager from './scoreManager';
 import {
-    BALL_START_X,
+    NET_STYLE, TEXT_STYLE,
+    BALL_START_X, 
     PADDLE_PLAYER_START_X, PADDLE_PLAYER_START_Y, PADDLE_OPPONENT_START_X, PADDLE_OPPONENT_START_Y,
     FRAME_PER_SECOND, POINTS_TO_WIN
 } from './config';
@@ -160,7 +161,7 @@ function checkVictory() {
  * @param {*} canvasContext - context to draw in
  */
 function drawNet(canvasContext) {
-    canvasContext.strokeStyle = 'white';
+    canvasContext.strokeStyle = NET_STYLE;
     canvasContext.setLineDash([5, 10]);
     canvasContext.beginPath();
     canvasContext.moveTo(400, 0);
@@ -180,7 +181,7 @@ function drawScore(canvasContext) {
  */
 function drawEndGame(canvasContext) {
     background.draw(canvasContext);
-    canvasContext.fillStyle = 'white';
+    canvasContext.fillStyle = TEXT_STYLE;
     if (endStatus == 1) {
         canvasContext.fillText('Player wins !', canvas.width / 2, canvas.height / 2);
     } else if (endStatus == 2) {

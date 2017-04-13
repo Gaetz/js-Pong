@@ -29,4 +29,8 @@ export const BALL_STYLE = 'white';
 // Background
 export const BACKGROUND_STYLE = 'black';
 
+// Net
+export const NET_STYLE = 'white';
 
+// Text
+export const TEXT_STYLE = 'white';
