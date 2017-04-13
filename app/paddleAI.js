@@ -2,7 +2,9 @@ import Paddle from './paddle';
 
 import { PADDLE_OPPONENT_Y_SPEED, PADDLE_OPPONENT_DEAD_ZONE } from './config';
 
-
+/**
+ * AI controlled subclass of Paddle
+ */
 export default class PaddleAI extends Paddle {
     constructor(x, y) {
         super(x, y);

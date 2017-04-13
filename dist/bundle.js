@@ -83,7 +83,7 @@ Object.defineProperty(exports, "__esModule", {
 // General game config
 var FRAME_PER_SECOND = exports.FRAME_PER_SECOND = 30;
 var ANGLE_MULTIPLICATOR = exports.ANGLE_MULTIPLICATOR = 5;
-var POINTS_TO_WIN = exports.POINTS_TO_WIN = 1;
+var POINTS_TO_WIN = exports.POINTS_TO_WIN = 3;
 
 // Paddle
 var PADDLE_WIDTH = exports.PADDLE_WIDTH = 20;
@@ -98,9 +98,8 @@ var PADDLE_OPPONENT_DEAD_ZONE = exports.PADDLE_OPPONENT_DEAD_ZONE = 30;
 
 // Ball
 var BALL_START_X = exports.BALL_START_X = 75;
-var BALL_START_Y = exports.BALL_START_Y = 75;
 var BALL_START_SPEED_X = exports.BALL_START_SPEED_X = 8;
-var BALL_START_SPEED_Y = exports.BALL_START_SPEED_Y = 8;
+var BALL_START_SPEED_Y = exports.BALL_START_SPEED_Y = 6;
 var BALL_RADIUS = exports.BALL_RADIUS = 10;
 var BALL_STYLE = exports.BALL_STYLE = 'white';
 
@@ -235,7 +234,8 @@ function _classCallCheck(instance, Constructor) { if (!(instance instanceof Cons
  * The ball the players have to catch
  */
 var Ball = function () {
-  function Ball(x, y) {
+  function Ball(x) {
+    var y = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : Math.round(Math.random() * 450 + 75);
     var radius = arguments.length > 2 && arguments[2] !== undefined ? arguments[2] : _config.BALL_RADIUS;
     var speedX = arguments.length > 3 && arguments[3] !== undefined ? arguments[3] : _config.BALL_START_SPEED_X;
     var speedY = arguments.length > 4 && arguments[4] !== undefined ? arguments[4] : _config.BALL_START_SPEED_Y;
@@ -268,6 +268,31 @@ var Ball = function () {
     }
 
     /**
+     * Called when a ball bounces on the paddle
+     * @param {*} paddle - Paddle on which the ball bounces
+     */
+
+  }, {
+    key: 'bounce',
+    value: function bounce(paddle, canvas) {
+      this.speedY = paddle.getBounceVerticalSpeed(this.y);
+      this.accelerate();
+      this.speedX *= -1;
+      // Place ball in case it got out of screen because of speed
+      if (this.x < canvas.width / 2) this.x = paddle.x + paddle.width;else this.x = paddle.x;
+    }
+
+    /**
+     * Each time the ball is hit, it accelerates
+     */
+
+  }, {
+    key: 'accelerate',
+    value: function accelerate() {
+      this.speedX = this.speedX + 5 * Math.sign(this.speedX);
+    }
+
+    /**
      * Reset ball position and speed
      */
 
@@ -275,7 +300,7 @@ var Ball = function () {
     key: 'reset',
     value: function reset() {
       this.x = _config.BALL_START_X;
-      this.y = _config.BALL_START_Y;
+      this.y = Math.round(Math.random() * 450 + 75);
       this.speedX = _config.BALL_START_SPEED_X;
       this.speedY = _config.BALL_START_SPEED_Y;
     }
@@ -468,7 +493,7 @@ function load() {
     canvasContext = canvas.getContext('2d');
     canvasContext.textAlign = 'center';
     background = new _background2.default(canvas.width, canvas.height);
-    ball = new _ball2.default(_config.BALL_START_X, _config.BALL_START_Y);
+    ball = new _ball2.default(_config.BALL_START_X);
     leftPaddle = new _paddle2.default(_config.PADDLE_PLAYER_START_X, _config.PADDLE_PLAYER_START_Y);
     rightPaddle = new _paddleAI2.default(_config.PADDLE_OPPONENT_START_X, _config.PADDLE_OPPONENT_START_Y);
     score = new _scoreManager2.default();
@@ -503,11 +528,10 @@ function update() {
         rightPaddle.update(ball);
         // Hozizontal out of terrain
         // - Left side
-        if (ball.x < leftPaddle.width) {
+        if (ball.x <= leftPaddle.width) {
             // Ball on pad
-            if (ball.y + ball.radius / 2 >= leftPaddle.y && ball.y + ball.radius / 2 <= leftPaddle.y + leftPaddle.height) {
-                ball.speedY = leftPaddle.getBounceVerticalSpeed(ball.y);
-                ball.speedX *= -1;
+            if (ball.y >= leftPaddle.y - ball.radius / 2 && ball.y <= leftPaddle.y + leftPaddle.height + ball.radius / 2) {
+                ball.bounce(leftPaddle, canvas);
             }
             // Ball missed
             else {
@@ -520,9 +544,8 @@ function update() {
         }
         // Right side
         if (ball.x > canvas.width - rightPaddle.width) {
-            if (ball.y + ball.radius / 2 >= rightPaddle.y && ball.y + ball.radius / 2 <= rightPaddle.y + rightPaddle.height) {
-                ball.speedY = rightPaddle.getBounceVerticalSpeed(ball.y);
-                ball.speedX *= -1;
+            if (ball.y >= rightPaddle.y - ball.radius / 2 && ball.y <= rightPaddle.y + rightPaddle.height + ball.radius / 2) {
+                ball.bounce(rightPaddle, canvas);
             } else {
                 if (ball.x > canvas.width) {
                     score.playerMarks();
@@ -539,6 +562,7 @@ function update() {
 function draw() {
     if (endStatus == 0) {
         background.draw(canvasContext);
+        drawNet(canvasContext);
         ball.draw(canvasContext);
         leftPaddle.draw(canvasContext);
         rightPaddle.draw(canvasContext);
@@ -579,6 +603,19 @@ function checkVictory() {
 }
 
 /**
+ * Draw a net in the middle of the canvas
+ * @param {*} canvasContext - context to draw in
+ */
+function drawNet(canvasContext) {
+    canvasContext.strokeStyle = 'white';
+    canvasContext.setLineDash([5, 10]);
+    canvasContext.beginPath();
+    canvasContext.moveTo(400, 0);
+    canvasContext.lineTo(400, 600);
+    canvasContext.stroke();
+}
+
+/**
  * Draw game scores
  */
 function drawScore(canvasContext) {
@@ -589,6 +626,8 @@ function drawScore(canvasContext) {
  * Draw victory screen
  */
 function drawEndGame(canvasContext) {
+    background.draw(canvasContext);
+    canvasContext.fillStyle = 'white';
     if (endStatus == 1) {
         canvasContext.fillText('Player wins !', canvas.width / 2, canvas.height / 2);
     } else if (endStatus == 2) {

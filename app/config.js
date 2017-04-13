@@ -6,6 +6,7 @@
 export const FRAME_PER_SECOND = 30;
 export const ANGLE_MULTIPLICATOR = 5;
 export const POINTS_TO_WIN = 3;
+export const BOUNCE_ACCELERATION = 2;
 
 // Paddle
 export const PADDLE_WIDTH = 20;
@@ -20,9 +21,8 @@ export const PADDLE_OPPONENT_DEAD_ZONE = 30;
 
 // Ball
 export const BALL_START_X = 75;
-export const BALL_START_Y = 75;
 export const BALL_START_SPEED_X = 8;
-export const BALL_START_SPEED_Y = 8;
+export const BALL_START_SPEED_Y = 6;
 export const BALL_RADIUS = 10;
 export const BALL_STYLE = 'white';
 

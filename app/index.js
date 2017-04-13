@@ -4,7 +4,7 @@ import Paddle from './paddle';
 import PaddleAI from './paddleAI';
 import ScoreManager from './scoreManager';
 import {
-    BALL_START_X, BALL_START_Y,
+    BALL_START_X,
     PADDLE_PLAYER_START_X, PADDLE_PLAYER_START_Y, PADDLE_OPPONENT_START_X, PADDLE_OPPONENT_START_Y,
     FRAME_PER_SECOND, POINTS_TO_WIN
 } from './config';
@@ -39,7 +39,7 @@ function load() {
     canvasContext = canvas.getContext('2d');
     canvasContext.textAlign = 'center';
     background = new Background(canvas.width, canvas.height);
-    ball = new Ball(BALL_START_X, BALL_START_Y);
+    ball = new Ball(BALL_START_X);
     leftPaddle = new Paddle(PADDLE_PLAYER_START_X, PADDLE_PLAYER_START_Y);
     rightPaddle = new PaddleAI(PADDLE_OPPONENT_START_X, PADDLE_OPPONENT_START_Y);
     score = new ScoreManager();
@@ -75,11 +75,10 @@ function update() {
         rightPaddle.update(ball);
         // Hozizontal out of terrain
         // - Left side
-        if (ball.x < leftPaddle.width) {
+        if (ball.x <= leftPaddle.width) {
             // Ball on pad
-            if (ball.y + ball.radius / 2 >= leftPaddle.y && ball.y + ball.radius / 2 <= leftPaddle.y + leftPaddle.height) {
-                ball.speedY = leftPaddle.getBounceVerticalSpeed(ball.y)
-                ball.speedX *= -1;
+            if (ball.y >= leftPaddle.y - ball.radius / 2 && ball.y <= leftPaddle.y + leftPaddle.height + ball.radius / 2) {
+                ball.bounce(leftPaddle, canvas);
             }
             // Ball missed
             else {
@@ -92,9 +91,8 @@ function update() {
         }
         // Right side
         if (ball.x > canvas.width - rightPaddle.width) {
-            if (ball.y + ball.radius / 2 >= rightPaddle.y && ball.y + ball.radius / 2 <= rightPaddle.y + rightPaddle.height) {
-                ball.speedY = rightPaddle.getBounceVerticalSpeed(ball.y)
-                ball.speedX *= -1;
+            if (ball.y >= rightPaddle.y - ball.radius / 2 && ball.y <= rightPaddle.y + rightPaddle.height + ball.radius / 2) {
+                ball.bounce(rightPaddle, canvas);
             }
             else {
                 if (ball.x > canvas.width) {
@@ -112,6 +110,7 @@ function update() {
 function draw() {
     if (endStatus == 0) {
         background.draw(canvasContext);
+        drawNet(canvasContext);
         ball.draw(canvasContext);
         leftPaddle.draw(canvasContext);
         rightPaddle.draw(canvasContext);
@@ -157,6 +156,19 @@ function checkVictory() {
 }
 
 /**
+ * Draw a net in the middle of the canvas
+ * @param {*} canvasContext - context to draw in
+ */
+function drawNet(canvasContext) {
+    canvasContext.strokeStyle = 'white';
+    canvasContext.setLineDash([5, 10]);
+    canvasContext.beginPath();
+    canvasContext.moveTo(400, 0);
+    canvasContext.lineTo(400, 600);
+    canvasContext.stroke();
+}
+
+/**
  * Draw game scores
  */
 function drawScore(canvasContext) {
@@ -167,11 +179,13 @@ function drawScore(canvasContext) {
  * Draw victory screen
  */
 function drawEndGame(canvasContext) {
+    background.draw(canvasContext);
+    canvasContext.fillStyle = 'white';
     if (endStatus == 1) {
         canvasContext.fillText('Player wins !', canvas.width / 2, canvas.height / 2);
     } else if (endStatus == 2) {
         canvasContext.fillText('Robot wins !', canvas.width / 2, canvas.height / 2);
-    }    
+    }
     setTimeout(() => {
         canvasContext.fillText('Click to play again', canvas.width / 2, canvas.height / 2 + 50);
     }, 1000);
