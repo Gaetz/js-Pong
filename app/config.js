@@ -6,7 +6,7 @@
 export const FRAME_PER_SECOND = 30;
 export const ANGLE_MULTIPLICATOR = 5;
 export const POINTS_TO_WIN = 3;
-export const BOUNCE_ACCELERATION = 2;
+export const BOUNCE_ACCELERATION = 1;
 
 // Paddle
 export const PADDLE_WIDTH = 20;

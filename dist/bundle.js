@@ -84,6 +84,7 @@ Object.defineProperty(exports, "__esModule", {
 var FRAME_PER_SECOND = exports.FRAME_PER_SECOND = 30;
 var ANGLE_MULTIPLICATOR = exports.ANGLE_MULTIPLICATOR = 5;
 var POINTS_TO_WIN = exports.POINTS_TO_WIN = 3;
+var BOUNCE_ACCELERATION = exports.BOUNCE_ACCELERATION = 1;
 
 // Paddle
 var PADDLE_WIDTH = exports.PADDLE_WIDTH = 20;
@@ -105,6 +106,12 @@ var BALL_STYLE = exports.BALL_STYLE = 'white';
 
 // Background
 var BACKGROUND_STYLE = exports.BACKGROUND_STYLE = 'black';
+
+// Net
+var NET_STYLE = exports.NET_STYLE = 'white';
+
+// Text
+var TEXT_STYLE = exports.TEXT_STYLE = 'white';
 
 /***/ }),
 /* 1 */
@@ -289,7 +296,7 @@ var Ball = function () {
   }, {
     key: 'accelerate',
     value: function accelerate() {
-      this.speedX = this.speedX + 5 * Math.sign(this.speedX);
+      this.speedX = this.speedX + _config.BOUNCE_ACCELERATION * Math.sign(this.speedX);
     }
 
     /**
@@ -340,6 +347,9 @@ function _possibleConstructorReturn(self, call) { if (!self) { throw new Referen
 
 function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
 
+/**
+ * AI controlled subclass of Paddle
+ */
 var PaddleAI = function (_Paddle) {
     _inherits(PaddleAI, _Paddle);
 
@@ -607,7 +617,7 @@ function checkVictory() {
  * @param {*} canvasContext - context to draw in
  */
 function drawNet(canvasContext) {
-    canvasContext.strokeStyle = 'white';
+    canvasContext.strokeStyle = _config.NET_STYLE;
     canvasContext.setLineDash([5, 10]);
     canvasContext.beginPath();
     canvasContext.moveTo(400, 0);
@@ -627,7 +637,7 @@ function drawScore(canvasContext) {
  */
 function drawEndGame(canvasContext) {
     background.draw(canvasContext);
-    canvasContext.fillStyle = 'white';
+    canvasContext.fillStyle = _config.TEXT_STYLE;
     if (endStatus == 1) {
         canvasContext.fillText('Player wins !', canvas.width / 2, canvas.height / 2);
     } else if (endStatus == 2) {
