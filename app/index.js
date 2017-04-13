@@ -11,7 +11,7 @@ import {
 
 let canvas, canvasContext;
 let ball, background, leftPaddle, rightPaddle;
-let score, isGameWon;
+let score, endStatus, isEndTriggered;
 
 /**
  * Game start
@@ -20,7 +20,7 @@ window.onload = function () {
     // Load game elements
     load();
     // Manage inputs
-    canvas.addEventListener('mousemove', function (evt) {
+    canvas.addEventListener('mousemove', (evt) => {
         let mousePos = calculateMousePos(evt);
         leftPaddle.y = mousePos.y - (leftPaddle.height / 2);
     });
@@ -43,16 +43,33 @@ function load() {
     leftPaddle = new Paddle(PADDLE_PLAYER_START_X, PADDLE_PLAYER_START_Y);
     rightPaddle = new PaddleAI(PADDLE_OPPONENT_START_X, PADDLE_OPPONENT_START_Y);
     score = new ScoreManager();
-    isGameWon = false;
+    endStatus = 0;
+    isEndTriggered = false;
 }
 
 /**
  * Update loop
  */
 function update() {
-    isGameWon = checkVictory();
+    // End condition
+    endStatus = checkVictory();
+
+    // End logic
+    if (endStatus != 0) {
+        // Mouse click to restart game
+        if (!isEndTriggered) {
+            drawEndGame(canvasContext);
+            canvas.addEventListener('click', function (evt) {
+                if (endStatus != 0)
+                    reset();
+            });
+            isEndTriggered = true;
+        }
+        return;
+    }
+
     // Game logic
-    if (isGameWon == 0) {
+    if (endStatus == 0) {
         ball.update(canvas);
         leftPaddle.update();
         rightPaddle.update(ball);
@@ -93,15 +110,23 @@ function update() {
  * Draw loop
  */
 function draw() {
-    if (isGameWon == 0) {
+    if (endStatus == 0) {
         background.draw(canvasContext);
         ball.draw(canvasContext);
         leftPaddle.draw(canvasContext);
         rightPaddle.draw(canvasContext);
-    } else {
-        drawEndGame(canvasContext);
     }
     drawScore(canvasContext);
+}
+
+/**
+ * Reset the game
+ */
+function reset() {
+    score.reset();
+    ball.reset();
+    isEndTriggered = false;
+    endStatus = 0;
 }
 
 /**
@@ -142,9 +167,12 @@ function drawScore(canvasContext) {
  * Draw victory screen
  */
 function drawEndGame(canvasContext) {
-    if (isGameWon == 1) {
+    if (endStatus == 1) {
         canvasContext.fillText('Player wins !', canvas.width / 2, canvas.height / 2);
-    } else if (isGameWon == 2) {
+    } else if (endStatus == 2) {
         canvasContext.fillText('Robot wins !', canvas.width / 2, canvas.height / 2);
-    }
+    }    
+    setTimeout(() => {
+        canvasContext.fillText('Click to play again', canvas.width / 2, canvas.height / 2 + 50);
+    }, 1000);
 }
