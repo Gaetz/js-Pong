@@ -5,9 +5,10 @@
 // General game config
 export const FRAME_PER_SECOND = 30;
 export const ANGLE_MULTIPLICATOR = 5;
+export const POINTS_TO_WIN = 7;
 
 // Paddle
-export const PADDLE_WIDTH = 10;
+export const PADDLE_WIDTH = 20;
 export const PADDLE_HEIGHT = 100;
 export const PADDLE_PLAYER_START_X = 0;
 export const PADDLE_PLAYER_START_Y = 250;
